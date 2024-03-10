@@ -17,8 +17,9 @@ class PostCell: UITableViewCell {
     @IBOutlet private weak var captionLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
     
-    @IBOutlet private weak var blurView: UIVisualEffectView!
-
+    
+    @IBOutlet weak var blurView: UIVisualEffectView!
+    
     private var imageDataRequest: DataRequest?
 
     func configure(with post: Post) {
@@ -70,7 +71,7 @@ class PostCell: UITableViewCell {
         } else {
 
             // Default to blur if we can't get or compute the date's above for some reason.
-            //blurView.isHidden = false
+            blurView.isHidden = false
         }
         
     }
