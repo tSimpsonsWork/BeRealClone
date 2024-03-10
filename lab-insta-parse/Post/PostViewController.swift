@@ -137,20 +137,45 @@ class PostViewController: UIViewController {
 
         // Save object in background (async)
         post.save { [weak self] result in
+            
+            // Get the current user
+            if var currentUser = User.current {
 
-            // Switch to the main thread for any UI updates
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let post):
-                    print("✅ Post Saved! \(post)")
+                // Update the `lastPostedDate` property on the user with the current date.
+                currentUser.lastPostedDate = Date()
 
-                    // Return to previous view controller
-                    self?.navigationController?.popViewController(animated: true)
+                // Save updates to the user (async)
+                currentUser.save { [weak self] result in
+                    switch result {
+                    case .success(let user):
+                        print("✅ User Saved! \(user)")
 
-                case .failure(let error):
-                    self?.showAlert(description: error.localizedDescription)
+                        // Switch to the main thread for any UI updates
+                        DispatchQueue.main.async {
+                            // Return to previous view controller
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+
+                    case .failure(let error):
+                        self?.showAlert(description: error.localizedDescription)
+                    }
                 }
             }
+            
+
+//            // Switch to the main thread for any UI updates
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let post):
+//                    print("✅ Post Saved! \(post)")
+//
+//                    // Return to previous view controller
+//                    self?.navigationController?.popViewController(animated: true)
+//
+//                case .failure(let error):
+//                    self?.showAlert(description: error.localizedDescription)
+//                }
+//            }
         }
 
     }

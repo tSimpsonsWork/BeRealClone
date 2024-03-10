@@ -25,5 +25,7 @@
 	<array>
 		<string>Filmotype-Jade.otf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Use camera</string>
 </dict>
 </plist>
